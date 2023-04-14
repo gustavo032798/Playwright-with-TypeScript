@@ -11,14 +11,19 @@ jobs:
     timeout-minutes: 60
     runs-on: ${{ ubuntu-latest }}
     steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js ${{ matrix.node_version }}
-      uses: actions/setup-node@v1
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.node_version }}
-
-    - name: npm install, build and test
-      run: |
-        npm install
-        npm run build --if-present
-        npm test
+        node_version: 18
+    - name: Npm Install
+      run: npm install
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+    - name: Install Playwright Browsers
+      run: npx playwright test
+    - uses: actions/upload-artifact@v3
+      if: aways()
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
