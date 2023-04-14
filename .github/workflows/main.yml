@@ -31,9 +31,10 @@ jobs:
     - name: Npm Install and Execution Tests
       env:
         DEPLOY_HOST: ${{ env.DEPLOY_HOST3 }}
-      run: npm install
-      run: npx playwright install --with-deps
-      run: npx playwright test
+      run: | 
+        npm install
+        npx playwright install --with-deps
+        npx playwright test
     - uses: actions/upload-artifact@v3
       if: always()
       with:
