@@ -13,8 +13,6 @@ jobs:
     - uses: actions/setup-node@v3
       with:
         node_version: 18
-    - name: Prepare Enviroment
-      run: bash up.sh
     - name: Npm Install
       run: npm install
     - name: Install Playwright Browsers
