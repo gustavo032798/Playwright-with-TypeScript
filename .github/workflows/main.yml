@@ -41,11 +41,12 @@ jobs:
     - uses: actions/setup-node@v3
       with:
         node_version: 18
-    - name: Npm Install and Execution Tests
-      run: | 
-        npm install
-        npx playwright install --with-deps
-        npx playwright test
+    - name: Npm Install
+      run: npm install
+    - name: Install Browsers
+      run: npx playwright install --with-deps
+    - name: Execution Tests
+      run: npx playwright test
     - uses: actions/upload-artifact@v3
       if: always()
       with:
