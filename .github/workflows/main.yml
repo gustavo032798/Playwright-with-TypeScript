@@ -1,9 +1,16 @@
 name: Run Playwright tests
+
 on:
   push:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+
+env:
+  DEPLOY_HOST1: api
+  DEPLOY_HOST2: web
+  DEPLOY_HOST3: execution
+
 jobs:
   test:
     timeout-minutes: 60
@@ -13,11 +20,19 @@ jobs:
     - uses: actions/setup-node@v3
       with:
         node_version: 18
-    - name: Npm Install
+    - name: Deploy API Server
+      env:
+        DEPLOY_HOST: ${{ env.DEPLOY_HOST1 }}
+      run: cd apps/api && yarn dev
+    - name: Deploy WEB Server
+      env:
+        DEPLOY_HOST: ${{ env.DEPLOY_HOST2 }}
+      run: cd apps/web && yarn dev
+    - name: Npm Install and Execution Tests
+      env:
+        DEPLOY_HOST: ${{ env.DEPLOY_HOST3 }}
       run: npm install
-    - name: Install Playwright Browsers
       run: npx playwright install --with-deps
-    - name: Install Playwright Browsers
       run: npx playwright test
     - uses: actions/upload-artifact@v3
       if: always()
