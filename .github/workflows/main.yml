@@ -2,19 +2,21 @@ name: Run Playwright tests
 on:
   push:
     branches:
-    - main
+    - [ main, master ]
   pull_request:
     branches:
-    - main
+    - [ main, master ]
 jobs:
   test:
     timeout-minutes: 60
-    runs-on: ${{ ubuntu-latest }}
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
         node_version: 18
+    - name: Prepare Enviroment
+      run: bash up.sh
     - name: Npm Install
       run: npm install
     - name: Install Playwright Browsers
