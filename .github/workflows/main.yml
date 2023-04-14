@@ -8,7 +8,7 @@ on:
 
 jobs:
   Deploy-API-Server:
-    timeout-minutes: 2
+    timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -21,7 +21,7 @@ jobs:
         npm install --legacy-peer-deps
         yarn dev
   Deploy-WEB-Server:
-    timeout-minutes: 2
+    timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
