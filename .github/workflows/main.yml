@@ -6,46 +6,44 @@ on:
   pull_request:
     branches: [ main, master ]
 
-env:
-  DEPLOY_HOST1: api
-  DEPLOY_HOST2: web
-  DEPLOY_HOST3: execution
-
 jobs:
-  deploy:
-  timeout-minutes: 60
+  Deploy-API-Server:
+    timeout-minutes: 2
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
         node_version: 18
-  deploy-api:
-    runs-on: ubuntu-latest
-    steps:
     - name: Deploy API Server
-      env:
-        DEPLOY_HOST: ${{ env.DEPLOY_HOST1 }}
       run: |
         cd apps/api
         npm install --legacy-peer-deps
         yarn dev
-  deploy-web:
+  Deploy-WEB-Server:
+    timeout-minutes: 2
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node_version: 18
     - name: Deploy WEB Server
-      env:
-        DEPLOY_HOST: ${{ env.DEPLOY_HOST2 }}
       run: |
         cd apps/web
         npm install --legacy-peer-deps
         yarn dev
-  test:
+  Execution-Tests:
+    timeout-minutes: 20
     runs-on: ubuntu-latest
+    if: ${{ always() }}
+      needs: [ Deploy-API-Server, Deploy-WEB-Server ]
     steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node_version: 18
     - name: Npm Install and Execution Tests
-      env:
-        DEPLOY_HOST: ${{ env.DEPLOY_HOST3 }}
       run: | 
         npm install
         npx playwright install --with-deps
