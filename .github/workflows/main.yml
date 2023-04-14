@@ -1,4 +1,4 @@
-name: Run Playwright tests
+name: Run Playwright Tests
 
 on:
   push:
@@ -12,14 +12,16 @@ env:
   DEPLOY_HOST3: execution
 
 jobs:
-  test:
-    timeout-minutes: 60
+  deploy:
+  timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
         node_version: 18
+  deploy-api:
+    runs-on: ubuntu-latest
     - name: Deploy API Server
       env:
         DEPLOY_HOST: ${{ env.DEPLOY_HOST1 }}
@@ -27,6 +29,8 @@ jobs:
         cd apps/api
         npm install --legacy-peer-deps
         yarn dev
+  deploy-web:
+    runs-on: ubuntu-latest
     - name: Deploy WEB Server
       env:
         DEPLOY_HOST: ${{ env.DEPLOY_HOST2 }}
@@ -34,6 +38,8 @@ jobs:
         cd apps/web
         npm install --legacy-peer-deps
         yarn dev
+  test:
+    runs-on: ubuntu-latest
     - name: Npm Install and Execution Tests
       env:
         DEPLOY_HOST: ${{ env.DEPLOY_HOST3 }}
