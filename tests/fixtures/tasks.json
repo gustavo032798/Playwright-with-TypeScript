@@ -1,0 +1,22 @@
+{
+  "success": {
+    "name": "Finalizar o curso de Ingles",
+    "is_done": false
+  },
+  "duplicate": {
+    "name": "Finalizar o PDI",
+    "is_done": false
+  },
+  "required": {
+    "name": "",
+    "is_done": false
+  },
+  "update": {
+    "name": "Pagar a fatura da internet",
+    "is_done": false
+  },
+  "delete": {
+    "name": "Estudar JavaScript",
+    "is_done": false
+  }
+}
