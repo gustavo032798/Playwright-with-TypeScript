@@ -36,8 +36,6 @@ jobs:
   Execution-Tests:
     timeout-minutes: 20
     runs-on: ubuntu-latest
-    if: ${{ always() }}
-      needs: [ Deploy-API-Server,Deploy-WEB-Server ]
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
