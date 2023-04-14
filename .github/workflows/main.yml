@@ -23,11 +23,17 @@ jobs:
     - name: Deploy API Server
       env:
         DEPLOY_HOST: ${{ env.DEPLOY_HOST1 }}
-      run: cd apps/api && yarn dev
+      run: |
+        cd apps/api
+        npm install
+        yarn dev
     - name: Deploy WEB Server
       env:
         DEPLOY_HOST: ${{ env.DEPLOY_HOST2 }}
-      run: cd apps/web && yarn dev
+      run: |
+        cd apps/web
+        npm install
+        yarn dev
     - name: Npm Install and Execution Tests
       env:
         DEPLOY_HOST: ${{ env.DEPLOY_HOST3 }}
