@@ -25,14 +25,14 @@ jobs:
         DEPLOY_HOST: ${{ env.DEPLOY_HOST1 }}
       run: |
         cd apps/api
-        npm install
+        npm install --legacy-peer-deps
         yarn dev
     - name: Deploy WEB Server
       env:
         DEPLOY_HOST: ${{ env.DEPLOY_HOST2 }}
       run: |
         cd apps/web
-        npm install
+        npm install --legacy-peer-deps
         yarn dev
     - name: Npm Install and Execution Tests
       env:
